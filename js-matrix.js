@@ -1,29 +1,49 @@
 
-var charnumber = 9;
+var charnumber = 100;
 
 // only ascii stuff
 var maxcharcode = 127;
-var mincharcode = 32;
-var charcodecount = maxcharcode - mincharcode;
+var mincharcode = 32; 
 
-var string = "";
 var firstchar = String.fromCharCode(mincharcode);
 
-var maxpossibilites = Math.pow(charcodecount, charnumber);
+var str = strpad("", charnumber, firstchar);
 
-var str = "";
 var num = 0;
-var starti = Math.pow(charcodecount, charnumber - 1);
+var i = 0;
 
-for (var i = starti; i < maxpossibilites; i++) {
+while (true) {
+	// increment word
+	for (i = charnumber-1; i > -1; i--) {
+		var cc = str.charCodeAt(i);
 
-	num = i;
-	do {
-		str = String.fromCharCode(num % charcodecount + mincharcode) + str;
-		num = Math.floor(num / charcodecount);
-	} while (num !== 0);
+		if (cc < maxcharcode) {
+			str = replaceAt(str, i, String.fromCharCode(cc + 1));
+			break;
+		}
+		else {
+			str = replaceAt(str, i, firstchar);
+		}
+	}
+
+	if (i === 0) {
+		console.log("Done");
+		break;
+	}
 
 	console.log(str);
+}
 
-	str = "";
+function strpad(str, length, padder) {
+	var strlen = str.length; 
+
+	for (var i = strlen; i < length; i++) {
+		str = padder + str;
+	}
+
+	return str;
+}
+
+function replaceAt(str, index, char) {
+	return str.substr(0, index) + char + str.substr(index + 1);
 }
