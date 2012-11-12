@@ -1,9 +1,11 @@
 
-var charnumber = 100;
+var jshint = require("jshint").JSHINT;
+
+var charnumber = 6;
 
 // only ascii stuff
 var maxcharcode = 127;
-var mincharcode = 32; 
+var mincharcode = 32;
 
 var firstchar = String.fromCharCode(mincharcode);
 
@@ -11,6 +13,9 @@ var str = strpad("", charnumber, firstchar);
 
 var num = 0;
 var i = 0;
+var passed = 0;
+var t = false;
+var starttime = new Date().getTime(), endtime = 0, persec = 0;
 
 while (true) {
 	// increment word
@@ -29,6 +34,10 @@ while (true) {
 	if (i === 0) {
 		console.log("Done");
 		break;
+	}
+
+	if (jshint(str)) {
+		passed++;
 	}
 
 	console.log(str);
